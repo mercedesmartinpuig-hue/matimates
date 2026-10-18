@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mati · Matemáticas Primaria — ¡Juega con las mates!</title>
+<meta name="description" content="Mati es la app de matemáticas para niños de 6 a 8 años que se juega como Duolingo: sesiones de 5 minutos, rachas, monedas y repaso espaciado. Contenido alineado con el currículo LOMLOE. Sin anuncios y sin datos de menores.">
+<meta property="og:title" content="Mati · Matemáticas Primaria">
+<meta property="og:description" content="¡Juega con las mates! 5 minutos al día con Mati, tu profe de mates.">
+<meta property="og:image" content="assets/icon-512.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1B1440">
+<link rel="icon" href="assets/icon-512.png">
+<style>
+/* ============ Mati — landing ============
+   Mismas variables que la app, para que se parezcan sin esfuerzo. */
+@font-face{font-family:'Baloo 2';src:url('fonts/Baloo2-800.ttf') format('truetype');font-weight:800;font-display:swap}
+@font-face{font-family:'Quicksand';src:url('fonts/Quicksand-700.ttf') format('truetype');font-weight:700;font-display:swap}
+@font-face{font-family:'Quicksand';src:url('fonts/Quicksand-500.ttf') format('truetype');font-weight:500;font-display:swap}
+:root{
+  --coral:#FF7A59;--coral-d:#D95A3B;--coral-s:#FFB59E;
+  --crema:#FFF6EC;--noche:#1B1440;--noche2:#2A2160;--card:#2E2670;--line:#4A4196;
+  --txt:#FFFFFF;--dim:#B9B3E6;
+  --verde:#3DDC84;--verde-d:#1F9E57;--azul:#42B8FF;--amar:#FFD23F;--amar-d:#C99800;
+  --r:22px;--s1:8px;--s2:16px;--s3:24px;--s4:48px;--s5:88px;
+  --max:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Quicksand',system-ui,-apple-system,'Segoe UI',sans-serif;font-weight:500;
+  background:var(--noche);color:var(--txt);line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,.brand,.btn,.pill,.price b,.num{font-family:'Baloo 2','Quicksand',cursive;font-weight:800;line-height:1.08;letter-spacing:-.01em}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--s3)}
+section{position:relative;padding:var(--s5) 0}
+
+/* ---------- cabecera ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(27,20,64,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.nav{display:flex;align-items:center;gap:var(--s3);height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-size:26px;text-decoration:none}
+.brand img{width:38px;height:38px;border-radius:11px}
+.brand span{color:var(--coral)}
+.nav ul{display:flex;gap:var(--s3);list-style:none;margin-left:auto}
+.nav ul a{text-decoration:none;color:var(--dim);font-weight:700;font-size:15px;transition:color .18s}
+.nav ul a:hover{color:var(--txt)}
+.nav .btn{margin-left:var(--s2)}
+
+/* ---------- botones ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:14px 26px;border-radius:16px;text-decoration:none;
+  font-size:17px;border:0;cursor:pointer;transition:transform .12s,box-shadow .12s;
+}
+.btn-p{background:var(--coral);color:#fff;box-shadow:0 6px 0 var(--coral-d),0 14px 26px rgba(255,122,89,.28)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 0 var(--coral-d),0 18px 32px rgba(255,122,89,.34)}
+.btn-p:active{transform:translateY(4px);box-shadow:0 2px 0 var(--coral-d)}
+.btn-g{background:transparent;color:var(--txt);border:2px solid var(--line);box-shadow:none}
+.btn-g:hover{border-color:var(--coral);color:var(--coral)}
+.btn svg{width:19px;height:19px;fill:currentColor}
+
+/* ---------- hero ---------- */
+.hero{padding:var(--s4) 0 var(--s5);overflow:visible}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s4);align-items:center}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,122,89,.14);border:1px solid rgba(255,122,89,.4);color:var(--coral-s);
+  padding:7px 15px;border-radius:999px;font-size:13.5px;letter-spacing:.02em;
+}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--coral);font-style:normal}
+.hero h1{font-size:clamp(40px,5.4vw,68px);margin:var(--s3) 0 var(--s2)}
+.hero h1 em{font-style:normal;color:var(--coral);display:block}
+.hero p.lead{font-size:20px;color:var(--dim);max-width:34ch}
+.cta{display:flex;gap:var(--s2);flex-wrap:wrap;margin:var(--s3) 0 var(--s2)}
+.trust{display:flex;gap:var(--s3);flex-wrap:wrap;color:var(--dim);font-size:14.5px;font-weight:700}
+.trust b{color:var(--verde)}
+
+/* Mati, sobre un blando de color */
+.fox{position:relative;display:grid;place-items:center;min-height:440px}
+.fox::before{
+  content:'';position:absolute;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,rgba(255,122,89,.55),rgba(255,210,63,.18) 55%,transparent 72%);
+  filter:blur(6px);
+}
+.fox img.mascot{position:relative;width:330px;filter:drop-shadow(0 26px 34px rgba(0,0,0,.45));animation:bob 5.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-16px) rotate(1.5deg)}}
+@media (prefers-reduced-motion:reduce){.fox img.mascot{animation:none}}
+.bubble{
+  position:absolute;background:var(--crema);color:var(--noche);font-weight:700;font-size:15px;
+  padding:11px 16px;border-radius:16px;box-shadow:0 12px 26px rgba(0,0,0,.32);
+}
+.bubble::after{content:'';position:absolute;bottom:-8px;left:26px;border:9px solid transparent;border-top-color:var(--crema);border-bottom:0}
+.b1{top:8%;left:-2%;animation:float 7s ease-in-out infinite}
+.b2{bottom:12%;right:-4%;animation:float 8.5s ease-in-out infinite .8s}
+.b2::after{left:auto;right:26px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+@media (prefers-reduced-motion:reduce){.bubble{animation:none}}
+
+/* ---------- título de sección ---------- */
+.eyebrow{color:var(--coral);font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase}
+h2{font-size:clamp(30px,3.7vw,44px);margin:10px 0 12px}
+.sub{color:var(--dim);font-size:18px;max-width:60ch}
+
+/* ---------- enganche (bento) ---------- */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s2);margin-top:var(--s4)}
+.c{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:var(--s3);position:relative;overflow:hidden;transition:transform .2s,border-color .2s;
+}
+.c:hover{transform:translateY(-4px);border-color:rgba(255,122,89,.55)}
+.c h3{font-size:21px;margin-bottom:6px}
+.c p{color:var(--dim);font-size:15.5px}
+.c .ico{font-size:32px;line-height:1;margin-bottom:14px;display:block}
+.c.w3{grid-column:span 3}.c.w2{grid-column:span 2}.c.w4{grid-column:span 4}.c.w6{grid-column:span 6}
+.c.hero-c{background:linear-gradient(140deg,var(--coral),#E2564B);border-color:transparent}
+.c.hero-c p{color:rgba(255,255,255,.9)}
+.streak{display:flex;gap:6px;margin-top:16px}
+.streak i{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.22);font-style:normal;display:grid;place-items:center;font-size:13px}
+.streak i.on{background:#fff}
+/* mapa de niveles, como en la app */
+.map{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:18px}
+.map-row{display:flex;gap:12px;align-items:center}
+.node{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;border:3px solid rgba(255,255,255,.5);box-shadow:0 6px 0 rgba(0,0,0,.22)}
+.node img{width:76%;height:76%;object-fit:contain}
+.n-v{background:linear-gradient(160deg,#8CF5B8,var(--verde))}
+.n-a{background:linear-gradient(160deg,#9BDcff,var(--azul))}
+.n-n{background:linear-gradient(160deg,#FFC09B,var(--coral))}
+.n-r{background:linear-gradient(160deg,#FFB5D6,#E4569C)}
+.n-x{background:#3A4478;box-shadow:0 5px 0 #262F5C}
+.n-x img{filter:saturate(.25) brightness(.92)}
+.n-y{background:linear-gradient(160deg,#FFE27A,var(--amar));box-shadow:0 6px 0 var(--amar-d)}
+
+/* ---------- currículo ---------- */
+.curr{background:var(--noche2);border-radius:32px;padding:var(--s5) 0;margin-top:var(--s2)}
+.grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s2);margin-top:var(--s4)}
+.sense{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:var(--r);padding:var(--s3)}
+.sense b{display:block;font-family:'Baloo 2',cursive;font-size:18px;margin-bottom:4px}
+.sense span{color:var(--dim);font-size:15px}
+.sense .tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:rgba(61,220,132,.16);color:var(--verde);margin-bottom:12px}
+.note{margin-top:var(--s3);color:var(--dim);font-size:14px;border-left:3px solid var(--line);padding-left:14px}
+
+/* ---------- precios ---------- */
+.prices{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s4);max-width:860px}
+.price{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:var(--s4) var(--s3)}
+.price.best{background:linear-gradient(165deg,#332A7A,#2E2670);border:2px solid var(--coral);position:relative}
+.price.best::before{content:'recomendado';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--coral);color:#fff;font-family:'Baloo 2',cursive;font-size:13px;padding:4px 14px;border-radius:999px}
+.price h3{font-size:22px}
+.price .num{font-size:44px;margin:10px 0 2px}
+.price .num small{font-size:16px;font-family:'Quicksand',sans-serif;font-weight:700;color:var(--dim)}
+.price ul{list-style:none;margin:var(--s3) 0;display:grid;gap:10px}
+.price li{display:flex;gap:10px;font-size:15.5px;color:var(--dim)}
+.price li::before{content:'✓';color:var(--verde);font-weight:700;flex:none}
+.price li.no::before{content:'—';color:var(--line)}
+.fine{color:var(--dim);font-size:14px;margin-top:var(--s2)}
+
+/* ---------- privacidad ---------- */
+.safe{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s2);margin-top:var(--s4)}
+.safe .c{background:rgba(61,220,132,.07);border-color:rgba(61,220,132,.3)}
+.safe .ico{color:var(--verde)}
+
+/* ---------- padres/maestros ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);align-items:center}
+.shot{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:var(--s3);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.shot img{border-radius:16px}
+.checklist{list-style:none;display:grid;gap:14px;margin-top:var(--s3)}
+.checklist li{display:flex;gap:12px;align-items:flex-start;font-size:17px}
+.checklist b{font-family:'Baloo 2',cursive}
+.checklist .tick{flex:none;width:26px;height:26px;border-radius:9px;background:rgba(61,220,132,.18);color:var(--verde);display:grid;place-items:center;font-size:15px;font-weight:700}
+
+/* ---------- faq ---------- */
+details{border-bottom:1px solid var(--line);padding:var(--s2) 0}
+summary{cursor:pointer;font-family:'Baloo 2',cursive;font-size:19px;list-style:none;display:flex;justify-content:space-between;gap:var(--s2)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';color:var(--coral);font-size:26px;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--dim);margin-top:12px;max-width:70ch}
+
+/* ---------- cierre ---------- */
+.final{text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(255,122,89,.2),transparent 62%);border-radius:32px}
+.final img{width:150px;margin:0 auto var(--s2)}
+footer{border-top:1px solid var(--line);padding:var(--s4) 0 var(--s3);color:var(--dim);font-size:14.5px}
+.f-grid{display:flex;gap:var(--s4);flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
+footer nav{display:grid;gap:8px}
+footer a{text-decoration:none;color:var(--dim)}footer a:hover{color:var(--txt)}
+.legal{margin-top:var(--s3);padding-top:var(--s2);border-top:1px solid var(--line);font-size:13px;line-height:1.7}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  section{padding:var(--s4) 0}
+  .hero-grid,.split,.prices{grid-template-columns:1fr}
+  .fox{min-height:340px;order:-1}
+  .fox img.mascot{width:250px}
+  .grid-6,.safe{grid-template-columns:1fr 1fr}
+  .bento .c{grid-column:span 6}
+  .nav ul{display:none}
+  .curr{padding:var(--s4) var(--s2)}
+}
+@media (max-width:560px){.grid-6,.safe{grid-template-columns:1fr}.hero h1{font-size:38px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><img src="assets/icon-512.png" alt="">Mati<span>·</span></a>
+    <ul>
+      <li><a href="#juego">Cómo engancha</a></li>
+      <li><a href="#curriculo">Currículo</a></li>
+      <li><a href="#colegio">Colegios</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#faq">Dudas</a></li>
+    </ul>
+    <a class="btn btn-p" href="#precios">Empezar gratis</a>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><i></i> 1º y 2º de Primaria · LOMLOE</span>
+      <h1>Cinco minutos al día<em>y las mates dejan de costar.</em></h1>
+      <p class="lead">Mati es la app donde tu hijo practica matemáticas como quien juega: con su racha, sus monedas y su profe de fieltro. Nada de fichas interminables.</p>
+      <div class="cta">
+        <a class="btn btn-p" href="#precios">
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6z"/></svg> Jugar gratis
+        </a>
+        <a class="btn btn-g" href="#juego">Ver cómo funciona</a>
+      </div>
+      <div class="trust">
+        <span><b>Sin anuncios</b></span>
+        <span><b>Sin cuenta para el niño</b></span>
+        <span><b>Funciona sin internet</b></span>
+      </div>
+    </div>
+    <div class="fox">
+      <div class="bubble b1">¡Hoy me tocan 8 sumas! 🧮</div>
+      <img class="mascot" src="assets/celebrar.png" alt="Mati, tu profe de mates">
+      <div class="bubble b2">Racha de 5 días 🔥</div>
+    </div>
+  </div>
+</section>
+
+<section id="juego">
+  <div class="wrap">
+    <span class="eyebrow">El enganche</span>
+    <h2>No engancha por los ejercicios. Engancha por lo demás.</h2>
+    <p class="sub">Mati copia la arquitectura de las apps que consiguen que un niño pida jugar mañana: progreso visible, premio variable y un personaje que te acompaña.</p>
+
+    <div class="bento">
+      <div class="c hero-c w3">
+        <span class="ico">🔥</span>
+        <h3>Racha diaria</h3>
+        <p>El número que no quieres romper. Cinco minutos bastan para mantenerla viva.</p>
+        <div class="streak"><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i>·</i><i>·</i></div>
+      </div>
+      <div class="c w3">
+        <span class="ico">🗺️</span>
+        <h3>Un mapa, no una lista de temas</h3>
+        <p>Se avanza nivel a nivel y se ve el camino. El niño siempre sabe qué toca después.</p>
+        <div class="map">
+          <div class="map-row"><div class="node n-y"><img src="ui/azul-numero-1.png" alt=""></div><div class="node n-v"><img src="ui/verde-suma.png" alt=""></div></div>
+          <div class="map-row"><div class="node n-a"><img src="ui/azul-numero-8.png" alt=""></div><div class="node n-n"><img src="ui/naranja-resta.png" alt=""></div></div>
+          <div class="map-row"><div class="node n-r"><img src="ui/rosa-igual.png" alt=""></div><div class="node n-x"><img src="ui/gris-candado.png" alt=""></div></div>
+        </div>
+      </div>
+
+      <div class="c w2"><span class="ico">🪙</span><h3>Monedas</h3><p>+2 por acierto y bonus por nivel perfecto. Nunca se compran con dinero real.</p></div>
+      <div class="c w2"><span class="ico">🎁</span><h3>Cofre sorpresa</h3><p>Premio variable: monedas, doble XP o un avatar raro. La sorpresa es lo que hace volver.</p></div>
+      <div class="c w2"><span class="ico">🎯</span><h3>Misión del día</h3><p>Un objetivo claro para una sesión corta: «acierta 15», «haz un nivel perfecto».</p></div>
+
+      <div class="c w3">
+        <span class="ico">🧠</span>
+        <h3>Repaso espaciado</h3>
+        <p>Lo que fallas vuelve a los 1, 3, 7, 14 y 30 días. Es la única parte que hace que los resultados se noten en el boletín — y el motivo real por el que una familia renueva.</p>
+      </div>
+      <div class="c w3">
+        <span class="ico">🏆</span>
+        <h3>Liga semanal</h3>
+        <p>Grupos de 20 con ascensos y descensos. Los rivales son anónimos: nadie sabe quién es quién, solo se compite contra uno mismo y contra el grupo.</p>
+      </div>
+
+      <div class="c w6">
+        <span class="ico">🧮</span>
+        <h3>Mati crece contigo</h3>
+        <p>Mati cambia de pose, se pone la beca cuando dominas un tema y te anima cuando dudas. La tienda es solo cosmética: <b>un niño que paga nunca es mejor que uno que no paga</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="curriculo" class="curr">
+  <div class="wrap">
+    <span class="eyebrow">Contenido</span>
+    <h2>Alineado con el currículo oficial, saber por saber.</h2>
+    <p class="sub">Los ejercicios no salen de una lista de «sumas y restas». Cada uno está etiquetado con el saber de la LOMLOE (Real Decreto 157/2022) que trabaja, y Mati cubre los seis sentidos de las matemáticas de Primaria.</p>
+    <div class="grid-6">
+      <div class="sense"><span class="tag">A · Numeración</span><b>Número y cálculo</b><span>Conteo hasta 999, composición, suma, resta, cálculo mental, estimación y recta numérica.</span></div>
+      <div class="sense"><span class="tag">B · Medida</span><b>Medir el mundo</b><span>Metro, kilo, litro, el reloj, el calendario y estimar qué pesa más o qué cabe antes.</span></div>
+      <div class="sense"><span class="tag">C · Espacial</span><b>Forma y posición</b><span>Figuras planas y cuerpos 3D, lados y vértices, arriba, abajo, entre, cerca y lejos.</span></div>
+      <div class="sense"><span class="tag">D · Álgebra</span><b>Patrones e incógnita</b><span>Series, igualdad y distinto de, el número que falta y problemas con dibujo.</span></div>
+      <div class="sense"><span class="tag">E · Datos</span><b>Estadística</b><span>Pictogramas y gráficas de barras: recoger datos, clasificarlos y leerlos.</span></div>
+      <div class="sense"><span class="tag">F · Socioafectivo</span><b>Confianza</b><span>Que se pueda equivocar sin castigo permanente: 3 vidas, se recuperan, y Mati siempre te espera.</span></div>
+    </div>
+    <p class="note">Mati no es material oficial del Ministerio. Cada comunidad autónoma concreta el currículo con su propio decreto; para uso de aula revisamos el decreto de tu comunidad antes de prometer nada.</p>
+  </div>
+</section>
+
+<section id="colegio">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Para el profe</span>
+      <h2>Lo que un maestro necesita en 20 minutos de rincones.</h2>
+      <ul class="checklist">
+        <li><span class="tick">1</span><span><b>Sesión de 5 minutos.</b> Cabe en un rato de rincones sin montar y desmontar nada.</span></li>
+        <li><span class="tick">2</span><span><b>Sin cuentas ni correos.</b> El alumno no deja ningún dato: se juega con un alias local.</span></li>
+        <li><span class="tick">3</span><span><b>Sin wifi.</b> Funciona offline en cualquier tablet o móvil Android del centro.</span></li>
+        <li><span class="tick">4</span><span><b>Diferenciación sola.</b> El repaso espaciado devuelve a cada niño lo suyo, sin que tú montes cuatro grupos.</span></li>
+        <li><span class="tick">5</span><span><b>Informe por saber.</b> «Va bien en cálculo, flojo en medida»: eso es lo que se lleva a la tutoría.</span></li>
+      </ul>
+      <div class="cta"><a class="btn btn-p" href="mailto:hola@matimates.com?subject=Probar%20Mati%20en%20clase">Pedir la ficha para mi clase</a></div>
+    </div>
+    <div class="shot">
+      <img src="assets/licenciado.png" alt="Mati con birrete">
+    </div>
+  </div>
+</section>
+
+<section id="precios">
+  <div class="wrap">
+    <span class="eyebrow">Precios</span>
+    <h2>Gratis para jugar. De pago para quererlo todo.</h2>
+    <div class="prices">
+      <div class="price">
+        <h3>Mati gratis</h3>
+        <div class="num">0 €</div>
+        <span style="color:var(--dim);font-size:15px">para siempre, sin tarjeta</span>
+        <ul>
+          <li>Primer ciclo completo (1º y 2º)</li>
+          <li>3 sesiones al día</li>
+          <li>3 vidas, se recargan solas</li>
+          <li>1 perfil</li>
+          <li class="no">Informe semanal para la familia</li>
+        </ul>
+        <a class="btn btn-g" href="#descarga">Descargar</a>
+      </div>
+      <div class="price best">
+        <h3>Mati Plus</h3>
+        <div class="num">34,99 €<small> /año</small></div>
+        <span style="color:var(--dim);font-size:15px">equivale a 2,92 € al mes · 14 días de prueba sin tarjeta</span>
+        <ul>
+          <li>Todos los cursos (1º a 6º)</li>
+          <li>Sesiones ilimitadas</li>
+          <li>Vidas ilimitadas</li>
+          <li>Hasta 4 perfiles de hermanos</li>
+          <li>Informe semanal por email</li>
+          <li>Sin anuncios, hoy y siempre</li>
+        </ul>
+        <a class="btn btn-p" href="#descarga">Probar 14 días</a>
+        <p class="fine">También 4,99 €/mes. El segundo hijo, a mitad de precio. El pago se hace siempre desde la cuenta del adulto en Google Play.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Tranquilidad</span>
+    <h2>Los datos del niño no existen.</h2>
+    <p class="sub">En España, tratar datos de menores de 14 años exige consentimiento paterno. Hemos preferido no necesitarlo: sin cuenta de niño, sin email, sin analítica que lo rastree, sin publicidad personalizada.</p>
+    <div class="safe">
+      <div class="c"><span class="ico">🔒</span><h3>Sin registro</h3><p>El progreso se guarda en el propio dispositivo. No hay servidor donde robar nada.</p></div>
+      <div class="c"><span class="ico">🚫</span><h3>Sin analítica de menores</h3><p>No medimos al niño. Ni una huella, ni un ID publicitario.</p></div>
+      <div class="c"><span class="ico">👨‍👩‍</span><h3>Pago solo de adulto</h3><p>Todo pasa por Google Play, en la cuenta del padre o la madre.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:820px">
+    <span class="eyebrow">Dudas razonables</span>
+    <h2>Preguntas</h2>
+    <details open><summary>¿Vale para un niño que va justo de mates?</summary><p>Sí, y es donde más se nota. Las sesiones son cortas y el repaso devuelve lo fallado más adelante, así que no se queda atascado repitiendo lo mismo tres veces seguidas. Las vidas se recuperan: equivocarse no tiene castigo permanente.</p></details>
+    <details><summary>¿Y para uno que va muy adelantado?</summary><p>El mapa se salta por estrellas: si domina un nivel, sube. Además del primer ciclo hay contenido de 3º, y Mati Plus incluye hasta 6º.</p></details>
+    <details><summary>¿Cuánto tiempo al día?</summary><p>Está pensado para 5 a 10 minutos. La versión gratis limita a 3 sesiones al día a propósito: más no siempre es mejor a los siete años.</p></details>
+    <details><summary>¿Necesita internet?</summary><p>No. Una vez instalada, funciona sin conexión, y el progreso se queda en el dispositivo.</p></details>
+    <details><summary>¿Hay recompensas comprables?</summary><p>No se compra ventaja. La tienda es solo estética: avatares y accesorios que se ganan jugando.</p></details>
+    <details><summary>¿En qué dispositivos funciona?</summary><p>Android 7.0 (Nougat) o superior. Teléfono y tableta.</p></details>
+  </div>
+</section>
+
+<section id="descarga">
+  <div class="wrap final">
+    <img src="assets/saltar.png" alt="Mati saltando">
+    <h2>¡Juega con las mates!</h2>
+    <p class="sub" style="margin:0 auto var(--s3)">Primer ciclo completo gratis, sin tarjeta y sin cuenta.</p>
+    <a class="btn btn-p" href="mailto:hola@matimates.com?subject=Quiero%20probar%20Mati">Avísame cuando esté en Google Play</a>
+    <p class="fine" style="text-align:center">Mati · Matemáticas Primaria — pronto en Google Play.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div style="max-width:34ch">
+        <a class="brand" href="#top"><img src="assets/icon-512.png" alt="">Mati<span>·</span></a>
+        <p style="margin-top:12px">Matemáticas de Primaria con Mati. Hecha en España por una arquitecta que se cansó de las fichas fotocopiadas.</p>
+      </div>
+      <nav>
+        <a href="#juego">Cómo engancha</a>
+        <a href="#curriculo">Currículo LOMLOE</a>
+        <a href="#colegio">Colegios</a>
+        <a href="#precios">Precios</a>
+      </nav>
+      <nav>
+        <a href="privacidad.html">Política de privacidad</a>
+        <a href="privacidad.html#menores">Protección de menores</a>
+        <a href="privacidad.html#cookies">Cookies</a>
+        <a href="mailto:hola@matimates.com">hola@matimates.com</a>
+      </nav>
+    </div>
+    <p class="legal">
+      © 2026 Mati · matimates.com y matimates.es. Marca registrada OEPM, núm. solicitud M4408926 (clase 09).
+      Mati no es material oficial del Ministerio de Educación; el currículo de referencia es el Real Decreto 157/2022 (LOMLOE),
+      que cada comunidad autónoma concreta mediante decreto propio. «Google Play» y «Android» son marcas de Google LLC.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
